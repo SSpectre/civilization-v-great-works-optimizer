@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <script src="optimizer.ts"></script>
+    </head>
     <body>
         <label for="civilization-select">Your civilization:</label>
         <select name="civilization-select" id="civilization-select">
@@ -48,112 +51,121 @@
             <option value="zulu">Zulu</option>
         </select>
         <h2>Cities and Buildings</h2>
-        <table style="text-align: center;">
-            <tr>
-                <th>City</th>
-                <th>National Epic</th>
-                <th>Heroic Epic</th>
-                <th>Great Library</th>
-                <th>Oxford University</th>
-                <th>Globe Theatre</th>
-                <th>Palace</th>
-                <th>Parthenon</th>
-                <th>Sistine Chapel</th>
-                <th>Uffizi</th>
-                <th>Hermitage</th>
-                <th>Louvre</th>
-                <th>Broadway</th>
-                <th>Sydney Opera House</th>
-                <th>Royal Library</th>
-                <th>Amphitheater</th>
-                <th>Cathedral</th>
-                <th>Museum</th>
-                <th>Opera House/Ceilidh Hall</th>
-                <th>Broadcast Tower</th>
-                <th>Hotel</th>
-                <th>Airport</th>
-                <th>National Visitor Center</th>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" id="city-1" name="city-1" placeholder="City 1" />
-                </td>
-                <td>
-                    <input type="radio" id="national-epic-radio-1" name="national-epic-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="heroic-epic-radio-1" name="heroic-epic-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="great-library-radio-1" name="great-library-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="oxford-university-radio-1" name="oxford-university-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="globe-theatre-radio-1" name="globe-theatre-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="palace-radio-1" name="palace-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="parthenon-radio-1" name="parthenon-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="sistine-chapel-radio-1" name="sistine-chapel-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="uffizi-radio-1" name="uffizi-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="hermitage-radio-1" name="hermitage-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="louvre-radio-1" name="louvre-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="broadway-radio-1" name="broadway-radio" />
-                </td>
-                <td>
-                    <input type="radio" id="sydney-opera-house-radio-1" name="sydney-opera-house-radio" />
-                </td>
-                <td>
-                    <input type="checkbox" id="royal-library-check-1" name="royal-library-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="amphitheater-check-1" name="amphitheater-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="cathedral-check-1" name="cathedral-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="museum-check-1" name="museum-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="opera-house-check-1" name="opera-house-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="broadcast-tower-check-1" name="broadcast-tower-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="hotel-check-1" name="hotel-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="airport-check-1" name="airport-check-1" />
-                </td>
-                <td>
-                    <input type="checkbox" id="national-visitor-center-check-1" name="national-visitor-center-check-1" />
-                </td>
-            </tr>
+        <table id="city-building-table" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>National Epic</th>
+                    <th>Heroic Epic</th>
+                    <th>Great Library</th>
+                    <th>Oxford University</th>
+                    <th>Globe Theatre</th>
+                    <th>Palace</th>
+                    <th>Parthenon</th>
+                    <th>Sistine Chapel</th>
+                    <th>Uffizi</th>
+                    <th>Hermitage</th>
+                    <th>Louvre</th>
+                    <th>Broadway</th>
+                    <th>Sydney Opera House</th>
+                    <th>Royal Library</th>
+                    <th>Amphitheater</th>
+                    <th>Cathedral</th>
+                    <th>Museum</th>
+                    <th>Opera House/Ceilidh Hall</th>
+                    <th>Broadcast Tower</th>
+                    <th>Hotel</th>
+                    <th>Airport</th>
+                    <th>National Visitor Center</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="text" id="city-1" name="city-1" placeholder="City 1" />
+                    </td>
+                    <td>
+                        <input type="radio" id="national-epic-radio-1" name="national-epic-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="heroic-epic-radio-1" name="heroic-epic-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="great-library-radio-1" name="great-library-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="oxford-university-radio-1" name="oxford-university-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="globe-theatre-radio-1" name="globe-theatre-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="palace-radio-1" name="palace-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="parthenon-radio-1" name="parthenon-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="sistine-chapel-radio-1" name="sistine-chapel-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="uffizi-radio-1" name="uffizi-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="hermitage-radio-1" name="hermitage-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="louvre-radio-1" name="louvre-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="broadway-radio-1" name="broadway-radio" />
+                    </td>
+                    <td>
+                        <input type="radio" id="sydney-opera-house-radio-1" name="sydney-opera-house-radio" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="royal-library-check-1" name="royal-library-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="amphitheater-check-1" name="amphitheater-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="cathedral-check-1" name="cathedral-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="museum-check-1" name="museum-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="opera-house-check-1" name="opera-house-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="broadcast-tower-check-1" name="broadcast-tower-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="hotel-check-1" name="hotel-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="airport-check-1" name="airport-check-1" />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="national-visitor-center-check-1" name="national-visitor-center-check-1" />
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <button type="button">Add City</button>
         <h2>Great Works</h2>
-        <table>
-            <tr>
-                <th>Type</th>
-                <th>Civilization</th>
-                <th>Era</th>
-            </tr>
+        <table id="great-works-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Civilization</th>
+                    <th>Era</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
         </table>
         <button type="button">Add Great Work</button>
     </body>
