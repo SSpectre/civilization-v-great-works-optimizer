@@ -1,6 +1,7 @@
 export default function CivilizationSelect({name}: Readonly<{name: string}>) {
     return (
         <select name={name} id={name}>
+            <option value="" disabled selected>Select</option>
             <option value="american">American</option>
             <option value="arabian">Arabian</option>
             <option value="assyrian">Assyrian</option>

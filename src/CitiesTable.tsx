@@ -1,13 +1,15 @@
 import City from "./City";
 import { useState } from "react";
 
-export default function CitiesTable() {
-    const [cityNumber, setCityNumber] = useState(1);
+interface CitiesTableProps {
+    defaultCityNumber: number;
+    cityNumber: number;
+    
+    addCity: () => void;
+    removeCity: () => void;
+}
 
-    function addCity() {
-        setCityNumber(cityNumber + 1);
-    }
-
+export default function CitiesTable({defaultCityNumber, cityNumber, addCity, removeCity}: CitiesTableProps) {
     const cities = [];
     for (let i = 1; i <= cityNumber; i++) {
         cities.push(
@@ -17,7 +19,11 @@ export default function CitiesTable() {
 
     return (
         <div>
-            <h2>Cities and Buildings</h2>
+            <div>
+                <h2 className="table-header">Cities and Buildings</h2>
+                <button onClick={addCity}>Add City</button>
+                <button onClick={removeCity}>Remove City</button>
+            </div>
             <table id="city-building-table">
                 <thead>
                 <tr>
@@ -50,7 +56,6 @@ export default function CitiesTable() {
                     {cities}
                 </tbody>
             </table>
-            <button onClick={addCity}>Add City</button>
         </div>
     );
 }

@@ -1,23 +1,30 @@
 import { useState } from "react";
 import GreatWork from "./GreatWork";
 
-export default function GreatWorksTable() {
-    const [workNumber, setWorkNumber] = useState(0);
+interface GreatWorksTableProps {
+    defaultWorkNumber: number;
+    workNumber: number;
 
-    function addGreatWork() {
-        setWorkNumber(workNumber + 1);
-    }
+    addGreatWork: () => void;
+    removeGreatWork: () => void;
+    selectGreatWorkType: (value: string, oldValue: string, tableRow: number) => void;
+}
+
+export default function GreatWorksTable({defaultWorkNumber, workNumber, addGreatWork, removeGreatWork, selectGreatWorkType}: GreatWorksTableProps) {
+
 
     const greatWorks = [];
-    for (let i = 0; i < workNumber; i++) {
+    for (let i = defaultWorkNumber; i < workNumber; i++) {
         greatWorks.push(
-            <GreatWork workNumber={i+1} />
+            <GreatWork workNumber={i+1} selectGreatWorkType={selectGreatWorkType} />
         );
     }
 
     return(
         <div>
-            <h2>Great Works</h2>
+            <h2 className="table-header">Great Works</h2>
+            <button onClick={addGreatWork}>Add Great Work</button>
+            <button onClick={removeGreatWork}>Remove Great Work</button>
             <table id="great-works-table">
                 <thead>
                     <tr>
@@ -31,7 +38,6 @@ export default function GreatWorksTable() {
                     {greatWorks}
                 </tbody>
             </table>
-            <button onClick={addGreatWork}>Add Great Work</button>
         </div>
     );
 }
