@@ -1,22 +1,19 @@
-import { useState } from "react";
 import GreatWork from "./GreatWork";
 
-interface GreatWorksTableProps {
-    defaultWorkNumber: number;
-    workNumber: number;
+type FunctionCallback = () => void;
 
-    addGreatWork: () => void;
-    removeGreatWork: () => void;
-    selectGreatWorkType: (value: string, oldValue: string, tableRow: number) => void;
+interface GreatWorksTableProps {
+    workNumber: number;
+    defaultWorkNumber: number;
+    addGreatWork: FunctionCallback;
+    removeGreatWork: FunctionCallback;
 }
 
-export default function GreatWorksTable({defaultWorkNumber, workNumber, addGreatWork, removeGreatWork, selectGreatWorkType}: GreatWorksTableProps) {
-
-
+export default function GreatWorksTable({workNumber, defaultWorkNumber, addGreatWork, removeGreatWork}: Readonly<GreatWorksTableProps>) {
     const greatWorks = [];
     for (let i = defaultWorkNumber; i < workNumber; i++) {
         greatWorks.push(
-            <GreatWork workNumber={i+1} selectGreatWorkType={selectGreatWorkType} />
+            <GreatWork workNumber={i+1} />
         );
     }
 

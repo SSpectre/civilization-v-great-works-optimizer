@@ -1,21 +1,42 @@
 import City from "./City";
-import { useState } from "react";
+import { buildingList } from "./buildingList";
+
+type FunctionCallback = () => void;
 
 interface CitiesTableProps {
-    defaultCityNumber: number;
     cityNumber: number;
-    
-    addCity: () => void;
-    removeCity: () => void;
+    defaultCityNumber: number;
+    addCity: FunctionCallback;
+    removeCity: FunctionCallback;
 }
 
-export default function CitiesTable({defaultCityNumber, cityNumber, addCity, removeCity}: CitiesTableProps) {
+export default function CitiesTable({cityNumber, defaultCityNumber, addCity, removeCity}: Readonly<CitiesTableProps>) {
     const cities = [];
-    for (let i = 1; i <= cityNumber; i++) {
+    for (let i = defaultCityNumber; i <= cityNumber; i++) {
         cities.push(
             <City cityNumber={i} />
         );
     }
+
+    const buildings = buildingList.map(building => {
+        const regex = /[ \/]/;
+        let formatted = building.name.replaceAll("-", " ");
+        formatted = formatted[0].toUpperCase() + formatted.substring(1);
+        
+        //capitalize the first letter after each space or slash
+        let startIndex = 0;
+        let index;
+        do {
+            index = formatted.substring(startIndex).search(regex) + 1;
+            let adjustedIndex = index + startIndex;
+
+            formatted = formatted.substring(0, adjustedIndex) + formatted[adjustedIndex].toUpperCase() + formatted.substring(adjustedIndex + 1);
+            startIndex = adjustedIndex;
+        }
+        while (index > 0);
+
+        return <th key={building.name}>{formatted}</th>
+    });
 
     return (
         <div>
@@ -27,30 +48,9 @@ export default function CitiesTable({defaultCityNumber, cityNumber, addCity, rem
             <table id="city-building-table">
                 <thead>
                 <tr>
-                        <th>Name</th>
-                        <th>National Epic</th>
-                        <th>Heroic Epic</th>
-                        <th>Great Library</th>
-                        <th>Oxford University</th>
-                        <th>Globe Theatre</th>
-                        <th>Palace</th>
-                        <th>Parthenon</th>
-                        <th>Sistine Chapel</th>
-                        <th>Uffizi</th>
-                        <th>Hermitage</th>
-                        <th>Louvre</th>
-                        <th>Broadway</th>
-                        <th>Sydney Opera House</th>
-                        <th>Royal Library</th>
-                        <th>Amphitheater</th>
-                        <th>Cathedral</th>
-                        <th>Museum</th>
-                        <th>Opera House/Ceilidh Hall</th>
-                        <th>Broadcast Tower</th>
-                        <th>Hotel</th>
-                        <th>Airport</th>
-                        <th>National Visitor Center</th>
-                    </tr>
+                    <th>Name</th>
+                    {buildings}
+                </tr>
                 </thead>
                 <tbody>
                     {cities}
