@@ -5,16 +5,15 @@ type FunctionCallback = () => void;
 
 interface CitiesTableProps {
     cityNumber: number;
-    defaultCityNumber: number;
     addCity: FunctionCallback;
     removeCity: FunctionCallback;
 }
 
-export default function CitiesTable({cityNumber, defaultCityNumber, addCity, removeCity}: Readonly<CitiesTableProps>) {
+export default function CitiesTable({cityNumber, addCity, removeCity}: Readonly<CitiesTableProps>) {
     const cities = [];
-    for (let i = defaultCityNumber; i <= cityNumber; i++) {
+    for (let i = 0; i < cityNumber; i++) {
         cities.push(
-            <City cityNumber={i} />
+            <City cityNumber={i+1} />
         );
     }
 

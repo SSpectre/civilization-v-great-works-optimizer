@@ -5,18 +5,15 @@ import CitiesTable from './CitiesTable'
 import CivilizationSelect from './CivilizationSelect'
 
 export default function App() {
-    const defaultCityNumber: number = 1;
-    const [cityNumber, setCityNumber] = useState(defaultCityNumber);
-
-    const defaultWorkNumber: number = 0;
-    const [workNumber, setWorkNumber] = useState(defaultWorkNumber);
+    const [cityNumber, setCityNumber] = useState(0);
+    const [workNumber, setWorkNumber] = useState(0);
 
     function addCity() {
         setCityNumber(cityNumber + 1);
     }
 
     function removeCity() {
-        if (cityNumber > defaultCityNumber) {
+        if (cityNumber > 0) {
             setCityNumber(cityNumber - 1);
         }
     }
@@ -26,14 +23,14 @@ export default function App() {
     }
 
     function removeGreatWork() {
-        if (workNumber > defaultWorkNumber) {
+        if (workNumber > 0) {
             setWorkNumber(workNumber - 1);
         }
     }
 
     function reset() {
-        setCityNumber(defaultCityNumber);
-        setWorkNumber(defaultWorkNumber);
+        setCityNumber(0);
+        setWorkNumber(0);
     }
 
     return (
@@ -41,8 +38,8 @@ export default function App() {
             <label htmlFor='civilization-select'>Your civilization: </label>
             <CivilizationSelect name={"civilization-select"}/>
             <button onClick={reset}>Reset</button>
-            <CitiesTable cityNumber={cityNumber} defaultCityNumber={defaultCityNumber} addCity={addCity} removeCity={removeCity} />
-            <GreatWorksTable workNumber={workNumber} defaultWorkNumber={defaultWorkNumber} addGreatWork={addGreatWork} removeGreatWork={removeGreatWork} />
+            <CitiesTable cityNumber={cityNumber} addCity={addCity} removeCity={removeCity} />
+            <GreatWorksTable workNumber={workNumber} addGreatWork={addGreatWork} removeGreatWork={removeGreatWork} />
         </div>
     );
 }

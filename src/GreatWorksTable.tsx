@@ -4,14 +4,13 @@ type FunctionCallback = () => void;
 
 interface GreatWorksTableProps {
     workNumber: number;
-    defaultWorkNumber: number;
     addGreatWork: FunctionCallback;
     removeGreatWork: FunctionCallback;
 }
 
-export default function GreatWorksTable({workNumber, defaultWorkNumber, addGreatWork, removeGreatWork}: Readonly<GreatWorksTableProps>) {
+export default function GreatWorksTable({workNumber, addGreatWork, removeGreatWork}: Readonly<GreatWorksTableProps>) {
     const greatWorks = [];
-    for (let i = defaultWorkNumber; i < workNumber; i++) {
+    for (let i = 0; i < workNumber; i++) {
         greatWorks.push(
             <GreatWork workNumber={i+1} />
         );
