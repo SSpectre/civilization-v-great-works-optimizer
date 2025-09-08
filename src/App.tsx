@@ -19,7 +19,12 @@ export default function App() {
     }
 
     function addGreatWork() {
-        setWorkNumber(workNumber + 1);
+        if (cityNumber > 0) {
+            setWorkNumber(workNumber + 1);
+        }
+        else {
+            alert("Cities must be added before great works.");
+        }
     }
 
     function removeGreatWork() {

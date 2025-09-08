@@ -12,7 +12,7 @@ export default function GreatWorksTable({workNumber, addGreatWork, removeGreatWo
     const greatWorks = [];
     for (let i = 0; i < workNumber; i++) {
         greatWorks.push(
-            <GreatWork workNumber={i+1} />
+            <GreatWork key={i} workNumber={i+1} />
         );
     }
 

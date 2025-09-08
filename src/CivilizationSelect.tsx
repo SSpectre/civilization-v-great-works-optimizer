@@ -8,8 +8,8 @@ export default function CivilizationSelect({name}: Readonly<{name: string}>) {
     });
 
     return (
-        <select name={name} id={name}>
-            <option value="" disabled selected>Select</option>
+        <select name={name} id={name} defaultValue={""}>
+            <option value="" disabled>Select</option>
             {options}
         </select>
     );
