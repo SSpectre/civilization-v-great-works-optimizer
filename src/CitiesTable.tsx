@@ -11,14 +11,14 @@ interface CitiesTableProps {
 }
 
 export default function CitiesTable({cityNumber, addCity, removeCity}: Readonly<CitiesTableProps>) {
-    const cities = [];
+    const cityComponents = [];
     for (let i = 0; i < cityNumber; i++) {
-        cities.push(
+        cityComponents.push(
             <City cityNumber={i+1} />
         );
     }
 
-    const buildings = buildingList.map(building => {
+    const buildingComponents = buildingList.map(building => {
         const regex = /[ \/]/;
         let formatted = building.name.replaceAll("-", " ");
         formatted = formatted[0].toUpperCase() + formatted.substring(1);
@@ -49,11 +49,11 @@ export default function CitiesTable({cityNumber, addCity, removeCity}: Readonly<
                 <thead>
                 <tr>
                     <th>Name</th>
-                    {buildings}
+                    {buildingComponents}
                 </tr>
                 </thead>
                 <tbody>
-                    {cities}
+                    {cityComponents}
                 </tbody>
             </table>
         </div>

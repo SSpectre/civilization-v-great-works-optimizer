@@ -9,9 +9,9 @@ interface GreatWorksTableProps {
 }
 
 export default function GreatWorksTable({workNumber, addGreatWork, removeGreatWork}: Readonly<GreatWorksTableProps>) {
-    const greatWorks = [];
+    const greatWorkComponents = [];
     for (let i = 0; i < workNumber; i++) {
-        greatWorks.push(
+        greatWorkComponents.push(
             <GreatWork key={i} workNumber={i+1} />
         );
     }
@@ -31,7 +31,7 @@ export default function GreatWorksTable({workNumber, addGreatWork, removeGreatWo
                     </tr>
                 </thead>
                 <tbody>
-                    {greatWorks}
+                    {greatWorkComponents}
                 </tbody>
             </table>
         </div>
