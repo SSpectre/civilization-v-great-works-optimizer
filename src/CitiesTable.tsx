@@ -2,19 +2,18 @@ import { useState, JSX } from "react";
 import City from "./City";
 import { buildingList } from "./buildingList";
 
-type FunctionCallback = () => void;
-
 interface CitiesTableProps {
     cityNumber: number;
-    addCity: FunctionCallback;
-    removeCity: FunctionCallback;
+    addCity: () => void;
+    removeCity: () => void;
+    renameCity: (id: number, name:string) => void;
 }
 
-export default function CitiesTable({cityNumber, addCity, removeCity}: Readonly<CitiesTableProps>) {
+export default function CitiesTable({cityNumber, addCity, removeCity, renameCity}: Readonly<CitiesTableProps>) {
     const cityComponents = [];
     for (let i = 0; i < cityNumber; i++) {
         cityComponents.push(
-            <City cityNumber={i+1} />
+            <City cityNumber={i+1} renameCity={(id, name) => renameCity(id, name)} />
         );
     }
 

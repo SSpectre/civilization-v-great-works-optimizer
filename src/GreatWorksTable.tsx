@@ -1,11 +1,9 @@
 import GreatWork from "./GreatWork";
 
-type FunctionCallback = () => void;
-
 interface GreatWorksTableProps {
     workNumber: number;
-    addGreatWork: FunctionCallback;
-    removeGreatWork: FunctionCallback;
+    addGreatWork: () => void;
+    removeGreatWork: () => void;
 }
 
 export default function GreatWorksTable({workNumber, addGreatWork, removeGreatWork}: Readonly<GreatWorksTableProps>) {
