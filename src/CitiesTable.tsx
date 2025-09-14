@@ -7,13 +7,14 @@ interface CitiesTableProps {
     addCity: () => void;
     removeCity: () => void;
     renameCity: (id: number, name:string) => void;
+    changeBuilding: (cityID: number, name: string) => void;
 }
 
-export default function CitiesTable({cityNumber, addCity, removeCity, renameCity}: Readonly<CitiesTableProps>) {
+export default function CitiesTable({cityNumber, addCity, removeCity, renameCity, changeBuilding}: Readonly<CitiesTableProps>) {
     const cityComponents = [];
     for (let i = 0; i < cityNumber; i++) {
         cityComponents.push(
-            <City cityNumber={i+1} renameCity={(id, name) => renameCity(id, name)} />
+            <City cityNumber={i+1} renameCity={(id, name) => renameCity(id, name)} changeBuilding={(cityID, name) => changeBuilding(cityID, name)} />
         );
     }
 

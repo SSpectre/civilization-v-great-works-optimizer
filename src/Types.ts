@@ -1,12 +1,7 @@
 export type City = {
     id: number;
     name: string;
-    buildings: Building[];
-}
-
-export type Building = {
-    id: number;
-    name: string;
+    buildings: string[];
 }
 
 export type GreatWork = {

@@ -4,13 +4,14 @@ interface GreatWorksTableProps {
     workNumber: number;
     addGreatWork: () => void;
     removeGreatWork: () => void;
+    updateGreatWork: (id: number, property: string, value: string) => void;
 }
 
-export default function GreatWorksTable({workNumber, addGreatWork, removeGreatWork}: Readonly<GreatWorksTableProps>) {
+export default function GreatWorksTable({workNumber, addGreatWork, removeGreatWork, updateGreatWork}: Readonly<GreatWorksTableProps>) {
     const greatWorkComponents = [];
     for (let i = 0; i < workNumber; i++) {
         greatWorkComponents.push(
-            <GreatWork key={i} workNumber={i+1} />
+            <GreatWork key={i} workNumber={i+1} updateGreatWork={(id, property, value) => updateGreatWork(id, property, value)} />
         );
     }
 

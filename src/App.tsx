@@ -1,61 +1,49 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import './App.css';
 import GreatWorksTable from './GreatWorksTable';
 import CitiesTable from './CitiesTable';
 import CivilizationSelect from './CivilizationSelect';
 import * as Types from './Types';
+import citiesReducer from './citiesReducer';
+import greatWorksReducer from './greatWorksReducer';
 
 export default function App() {
     const [cityNumber, setCityNumber] = useState(0);
     const [workNumber, setWorkNumber] = useState(0);
 
-    const [cities, setCities] = useState<Types.City[]>([]);
-    const [buildings, setBuildings] = useState<Types.Building[]>([]);
+    const initialCities: Types.City[] = [];
+    const [cities, citiesDispatch] = useReducer(citiesReducer, initialCities);
 
-    const [works, setWorks] = useState<Types.GreatWork[]>([]);
+    const initialWorks: Types.GreatWork[] = [];
+    const [works, greatWorksDispatch] = useReducer(greatWorksReducer, initialWorks);
 
     const addCity = () => {
         setCityNumber(cityNumber + 1);
 
-        setCities(
-            [
-                ...cities,
-                { id: cityNumber, name: "", buildings: [] }
-            ]
-        );
+        citiesDispatch({type: "add", cityNumber: cityNumber});
     }
 
     const removeCity = () => {
         if (cityNumber > 0) {
-            setCities(
-                cities.filter(city => city.id !== cityNumber)
-            );
+            citiesDispatch({type: "remove", cityNumber: cityNumber});
 
             setCityNumber(cityNumber - 1);
         }
     }
 
-    const renameCity = (id: number, name:string) => {
-        setCities(cities.map(city => {
-            if (city.id === id) {
-                return {...city, name: name};
-            }
-            else {
-                return city;
-            }
-        }));
+    const renameCity = (id: number, name: string) => {
+        citiesDispatch({type: "rename", id: id, name: name});
+    }
+
+    const changeBuilding = (cityID: number, name: string) => {
+        citiesDispatch({type: "changeBuilding", cityID: cityID, name: name});
     }
 
     const addGreatWork = () => {
         if (cityNumber > 0) {
             setWorkNumber(workNumber + 1);
 
-            setWorks(
-                [
-                    ...works,
-                    { id: workNumber, name: "", type: "", civilization: "", era: "" }
-                ]
-            );
+            greatWorksDispatch({type: "add", workNumber: workNumber});
         }
         else {
             alert("Cities must be added before great works.");
@@ -64,22 +52,22 @@ export default function App() {
 
     const removeGreatWork = () => {
         if (workNumber > 0) {
-            setWorks(
-                works.filter(work => work.id !== workNumber)
-            );
+            greatWorksDispatch({type: "remove", workNumber: workNumber});
             
             setWorkNumber(workNumber - 1);
-
         }
+    }
+
+    const updateGreatWork = (id: number, property: string, value: string) => {
+        greatWorksDispatch({type: "update", id: id, property: property, value: value});
     }
 
     function reset() {
         setCityNumber(0);
         setWorkNumber(0);
 
-        setCities([]);
-        setBuildings([]);
-        setWorks([]);
+        citiesDispatch({type: "reset"});
+        greatWorksDispatch({type: "reset"});
     }
 
     return (
@@ -87,8 +75,10 @@ export default function App() {
             <label htmlFor='civilization-select'>Your civilization: </label>
             <CivilizationSelect name={"civilization-select"}/>
             <button onClick={reset}>Reset</button>
-            <CitiesTable cityNumber={cityNumber} addCity={() => addCity()} removeCity={() => removeCity()} renameCity={(id, name) => renameCity(id, name)} />
-            <GreatWorksTable workNumber={workNumber} addGreatWork={() => addGreatWork()} removeGreatWork={() => removeGreatWork()} />
+            <CitiesTable cityNumber={cityNumber} addCity={() => addCity()} removeCity={() => removeCity()} renameCity={(id, name) => renameCity(id, name)}
+                changeBuilding={(cityID, name) => changeBuilding(cityID, name)} />
+            <GreatWorksTable workNumber={workNumber} addGreatWork={() => addGreatWork()} removeGreatWork={() => removeGreatWork()}
+                updateGreatWork={(id, property, value) => updateGreatWork(id, property, value)} />
         </div>
     );
 }
