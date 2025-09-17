@@ -9,6 +9,7 @@ import greatWorksReducer from './greatWorksReducer';
 
 export default function App() {
     const [civilization, setCivilization] = useState("");
+    const [aestheticsBonus, setAestheticsBonus] = useState(1);
 
     const [cityNumber, setCityNumber] = useState(0);
     const [workNumber, setWorkNumber] = useState(0);
@@ -64,7 +65,17 @@ export default function App() {
         greatWorksDispatch({type: "update", id: id, property: property, value: value});
     }
 
+    const updateAestheticsBonus = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.checked) {
+            setAestheticsBonus(2);
+        }
+        else {
+            setAestheticsBonus(1);
+        }
+    }
+
     function optimize() {
+        console.log(aestheticsBonus);
         console.log(cities);
     }
 
@@ -82,6 +93,8 @@ export default function App() {
         <div>
             <label htmlFor='civilization-select'>Your civilization: </label>
             <CivilizationSelect name={"civilization-select"} value={civilization} selectCivilization={(civ) => setCivilization(civ)}/>
+            <label htmlFor='aesthetic-bonus'>Aesthetics Bonus: </label>
+            <input type="checkbox" id="aesthetics-bonus" onChange={updateAestheticsBonus} />
             <button onClick={optimize}>Optimize</button>
             <button onClick={reset}>Reset All</button>
             <CitiesTable cityNumber={cityNumber} addCity={() => addCity()} removeCity={() => removeCity()} renameCity={(id, name) => renameCity(id, name)}

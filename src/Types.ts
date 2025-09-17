@@ -10,6 +10,8 @@ export type Building = {
     greatWorkType: string;
     slots: number;
     multiplierBonus: number;
+    cityID: number;
+    greatWorks: GreatWork[];
 }
 
 export type GreatWork = {

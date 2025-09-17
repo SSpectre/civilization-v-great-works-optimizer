@@ -24,6 +24,33 @@ export default function GreatWork({workNumber, updateGreatWork}: Readonly<GreatW
         return <option key={civ} value={civ}>{capitalized}</option>
     });
 
+    const cityStateOptions = Options.cityStateList.map(state => {
+        const regex = /[ \-]/;
+        let formatted;
+        if (state === "m'banza-kongo") {
+            formatted = state;
+        }
+        else {
+            formatted = state.replaceAll("-", " ");
+        }
+
+        formatted = formatted[0].toUpperCase() + formatted.substring(1);
+
+        //capitalize the first letter after each space or hyphen
+        let startIndex = 0;
+        let index;
+        do {
+            index = formatted.substring(startIndex).search(regex) + 1;
+            let adjustedIndex: number = index + startIndex;
+
+            formatted = formatted.substring(0, adjustedIndex) + formatted[adjustedIndex].toUpperCase() + formatted.substring(adjustedIndex + 1);
+            startIndex = adjustedIndex;
+        }
+        while (index > 0);
+
+        return <option key={state} value={state}>{formatted}</option>
+    });
+
     const typeOptions = Options.greatWorkTypeList.map(type => {
         let capitalized = type[0].toUpperCase() + type.substring(1);
 
@@ -51,6 +78,8 @@ export default function GreatWork({workNumber, updateGreatWork}: Readonly<GreatW
                 <select name={"civilization-select-" + workNumber} id={"civilization-" + workNumber} defaultValue={""} onChange={handleUpdate}>
                     <option value="" disabled>Select</option>
                     {civilizationOptions}
+                    <option value="states" disabled>---City States---</option>
+                    {cityStateOptions}
             </select>
             </td>
             <td>

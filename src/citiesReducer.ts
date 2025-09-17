@@ -48,7 +48,9 @@ export default function citiesReducer(cities:City[], action: CitiesAction): City
                                                             name: action.name,
                                                             greatWorkType: buildingProperties.type,
                                                             slots: buildingProperties.slots,
-                                                            multiplierBonus: buildingProperties.multiplierBonus
+                                                            multiplierBonus: buildingProperties.multiplierBonus,
+                                                            cityID: city.id,
+                                                            greatWorks: new Array(buildingProperties.slots)
                                                         }
                                                     ],
                                         multiplier: multiplier
