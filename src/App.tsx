@@ -8,6 +8,8 @@ import citiesReducer from './citiesReducer';
 import greatWorksReducer from './greatWorksReducer';
 
 export default function App() {
+    const [civilization, setCivilization] = useState("");
+
     const [cityNumber, setCityNumber] = useState(0);
     const [workNumber, setWorkNumber] = useState(0);
 
@@ -63,6 +65,8 @@ export default function App() {
     }
 
     function reset() {
+        setCivilization("");
+
         setCityNumber(0);
         setWorkNumber(0);
 
@@ -73,7 +77,7 @@ export default function App() {
     return (
         <div>
             <label htmlFor='civilization-select'>Your civilization: </label>
-            <CivilizationSelect name={"civilization-select"}/>
+            <CivilizationSelect name={"civilization-select"} selectCivilization={(civ) => setCivilization(civ)}/>
             <button onClick={reset}>Reset</button>
             <CitiesTable cityNumber={cityNumber} addCity={() => addCity()} removeCity={() => removeCity()} renameCity={(id, name) => renameCity(id, name)}
                 changeBuilding={(cityID, name) => changeBuilding(cityID, name)} />

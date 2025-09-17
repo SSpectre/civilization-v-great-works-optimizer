@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { buildingList } from "./buildingList";
+import { buildingList } from "./optionLists";
 
 interface CityProps {
     cityNumber: number;

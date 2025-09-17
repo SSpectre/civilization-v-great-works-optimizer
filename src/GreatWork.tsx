@@ -1,4 +1,4 @@
-import {civList} from './civList'
+import * as Options from './optionLists'
 
 interface GreatWorkProps {
     workNumber: number;
@@ -18,10 +18,22 @@ export default function GreatWork({workNumber, updateGreatWork}: Readonly<GreatW
         updateGreatWork(workID, eventTarget.substring(0, dashIndex), event.target.value);
     }
 
-    const civilizationOptions = civList.map(civ => {
+    const civilizationOptions = Options.civList.map(civ => {
         let capitalized = civ[0].toUpperCase() + civ.substring(1);
 
         return <option key={civ} value={civ}>{capitalized}</option>
+    });
+
+    const typeOptions = Options.greatWorkTypeList.map(type => {
+        let capitalized = type[0].toUpperCase() + type.substring(1);
+
+        return <option key={type} value={type}>{capitalized}</option>
+    });
+
+    const eraOptions = Options.eraList.map(era => {
+        let capitalized = era[0].toUpperCase() + era.substring(1);
+
+        return <option key={era} value={era}>{capitalized}</option>
     });
     
     return(
@@ -32,10 +44,7 @@ export default function GreatWork({workNumber, updateGreatWork}: Readonly<GreatW
             <td>
                 <select name={"type-select-" + workNumber} id={"type-select-" + workNumber} defaultValue={""} onChange={handleUpdate}>
                     <option value="" disabled>Select</option>
-                    <option value="writing">Writing</option>
-                    <option value="art">Art</option>
-                    <option value="music">Music</option>
-                    <option value="artifact">Artifact</option>
+                    {typeOptions}
                 </select>
             </td>
             <td>
@@ -47,14 +56,7 @@ export default function GreatWork({workNumber, updateGreatWork}: Readonly<GreatW
             <td>
                 <select name={"era-select-" + workNumber} id={"era-select-" + workNumber} defaultValue={""} onChange={handleUpdate}>
                     <option value="" disabled>Select</option>
-                    <option value="ancient">Ancient</option>
-                    <option value="classical">Classical</option>
-                    <option value="medieval">Medieval</option>
-                    <option value="renaissance">Renaissance</option>
-                    <option value="industrial">Industrial</option>
-                    <option value="modern">Modern</option>
-                    <option value="atomic">Atomic</option>
-                    <option value="information">Information</option>
+                    {eraOptions}
                 </select>
             </td>
         </tr>
