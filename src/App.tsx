@@ -77,7 +77,7 @@ export default function App() {
     return (
         <div>
             <label htmlFor='civilization-select'>Your civilization: </label>
-            <CivilizationSelect name={"civilization-select"} selectCivilization={(civ) => setCivilization(civ)}/>
+            <CivilizationSelect name={"civilization-select"} value={civilization} selectCivilization={(civ) => setCivilization(civ)}/>
             <button onClick={reset}>Reset</button>
             <CitiesTable cityNumber={cityNumber} addCity={() => addCity()} removeCity={() => removeCity()} renameCity={(id, name) => renameCity(id, name)}
                 changeBuilding={(cityID, name) => changeBuilding(cityID, name)} />
