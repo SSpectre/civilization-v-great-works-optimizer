@@ -64,6 +64,10 @@ export default function App() {
         greatWorksDispatch({type: "update", id: id, property: property, value: value});
     }
 
+    function optimize() {
+        console.log(cities);
+    }
+
     function reset() {
         setCivilization("");
 
@@ -78,7 +82,8 @@ export default function App() {
         <div>
             <label htmlFor='civilization-select'>Your civilization: </label>
             <CivilizationSelect name={"civilization-select"} value={civilization} selectCivilization={(civ) => setCivilization(civ)}/>
-            <button onClick={reset}>Reset</button>
+            <button onClick={optimize}>Optimize</button>
+            <button onClick={reset}>Reset All</button>
             <CitiesTable cityNumber={cityNumber} addCity={() => addCity()} removeCity={() => removeCity()} renameCity={(id, name) => renameCity(id, name)}
                 changeBuilding={(cityID, name) => changeBuilding(cityID, name)} />
             <GreatWorksTable workNumber={workNumber} addGreatWork={() => addGreatWork()} removeGreatWork={() => removeGreatWork()}

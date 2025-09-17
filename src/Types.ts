@@ -1,7 +1,13 @@
 export type City = {
     id: number;
     name: string;
-    buildings: string[];
+    buildings: Building[];
+}
+
+export type Building = {
+    name: string;
+    greatWorkType: string;
+    slots: number;
 }
 
 export type GreatWork = {

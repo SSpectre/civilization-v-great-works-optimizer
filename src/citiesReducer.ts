@@ -1,4 +1,4 @@
-import { City } from "./Types";
+import { City, Building } from "./Types";
 
 type CitiesAction =
     | {type: "add"; cityNumber: number}
@@ -28,11 +28,11 @@ export default function citiesReducer(cities:City[], action: CitiesAction): City
         case "changeBuilding": {
             return cities.map(city => {
                 if (city.id === action.cityID) {
-                    if (city.buildings.includes(action.name)) {
-                        return {...city, buildings: city.buildings.filter(building => building !== action.name)}
+                    if (city.buildings.find(building => building.name === action.name)) {
+                        return {...city, buildings: city.buildings.filter(building => building.name !== action.name)}
                     }
                     else {
-                        return {...city, buildings: [...city.buildings, action.name]}
+                        return {...city, buildings: [...city.buildings, {name: action.name, greatWorkType: "building", slots: 0}]}
                     }
                 }
                 else {
