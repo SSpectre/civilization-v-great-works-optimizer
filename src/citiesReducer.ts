@@ -11,7 +11,7 @@ type CitiesAction =
 export default function citiesReducer(cities:City[], action: CitiesAction): City[] {
     switch (action.type) {
         case "add": {
-            return [...cities, { id: action.cityNumber + 1, name: "", buildings: [] }]
+            return [...cities, { id: action.cityNumber + 1, name: "", buildings: [], multiplier: 1 }]
         }
         case "remove": {
             return cities.filter(city => city.id !== action.cityNumber)
@@ -29,13 +29,34 @@ export default function citiesReducer(cities:City[], action: CitiesAction): City
         case "changeBuilding": {
             return cities.map(city => {
                 if (city.id === action.cityID) {
-                    if (city.buildings.find(building => building.name === action.name)) {
+                    let foundBuilding = city.buildings.find(building => building.name === action.name)
+                    if (foundBuilding) {
                         //target city already has building; uncheck checkbox
-                        return {...city, buildings: city.buildings.filter(building => building.name !== action.name)}
+                        let multiplier = city.multiplier - foundBuilding.multiplierBonus;
+                        return {...city, buildings: city.buildings.filter(building => building.name !== action.name), multiplier: multiplier};
                     }
                     else {
                         //target city does not have building; add it
-                        return {...city, buildings: [...city.buildings, {name: action.name, greatWorkType: "building", slots: 0}]}
+                        let buildingProperties = buildingList.find(building => building.name === action.name);
+                        if (buildingProperties) {
+                            let multiplier = city.multiplier + buildingProperties.multiplierBonus;
+                            return {
+                                        ...city,
+                                        buildings: [
+                                                        ...city.buildings, 
+                                                        {
+                                                            name: action.name,
+                                                            greatWorkType: buildingProperties.type,
+                                                            slots: buildingProperties.slots,
+                                                            multiplierBonus: buildingProperties.multiplierBonus
+                                                        }
+                                                    ],
+                                        multiplier: multiplier
+                                    }
+                        }
+                        else {
+                            return city;
+                        }
                     }
                 }
                 else {
@@ -49,7 +70,7 @@ export default function citiesReducer(cities:City[], action: CitiesAction): City
                         return city;
                     }
                 }
-            })
+            });
         }
         case "reset": {
             return [];

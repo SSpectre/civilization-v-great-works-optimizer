@@ -2,12 +2,14 @@ export type City = {
     id: number;
     name: string;
     buildings: Building[];
+    multiplier: number;
 }
 
 export type Building = {
     name: string;
     greatWorkType: string;
     slots: number;
+    multiplierBonus: number;
 }
 
 export type GreatWork = {
