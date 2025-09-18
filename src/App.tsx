@@ -40,6 +40,7 @@ export default function App() {
 
     const changeBuilding = (cityID: number, name: string) => {
         citiesDispatch({type: "changeBuilding", cityID: cityID, name: name});
+        citiesDispatch({type: "buildInstructions", cityID: cityID, building: name});
     }
 
     const addGreatWork = () => {
@@ -75,7 +76,6 @@ export default function App() {
     }
 
     function optimize() {
-        console.log(aestheticsBonus);
         console.log(cities);
     }
 

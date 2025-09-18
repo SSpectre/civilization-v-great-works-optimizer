@@ -9,7 +9,7 @@ type GreatWorksAction =
 export default function greatWorksReducer(works:GreatWork[], action:GreatWorksAction) {
     switch (action.type) {
         case "add": {
-            return [...works, { id: action.workNumber + 1, name: "", type: "", civilization: "", era: "" }];
+            return [...works, { id: action.workNumber + 1, name: "Work " + (action.workNumber + 1), type: "", civilization: "", era: "" }];
         }
         case "remove": {
             return works.filter(work => work.id !== action.workNumber);
