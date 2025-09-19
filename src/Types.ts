@@ -19,7 +19,10 @@ export type Building = {
 
 export type Instruction = {
     tourism: number;
-    conditions: boolean;
+    greatWorks: number;
+    multiplier: number;
+    themingCondition: number;
+    aestheticsBonus: number;
     buildingID: number;
 }
 
@@ -29,4 +32,11 @@ export type GreatWork = {
     type: string;
     civilization: string;
     era: string;
+}
+
+export enum ThemingCondition  {
+    Unfulfilled,
+    Fulfilled,
+    FirstHalfFulfilled,
+    SecondHalfFulfilled
 }

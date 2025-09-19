@@ -1,4 +1,3 @@
-import { useState, JSX } from "react";
 import City from "./City";
 import { buildingList } from "./optionLists";
 

@@ -1,4 +1,4 @@
-import { City, Building } from "./Types";
+import { City, Instruction, ThemingCondition } from "./Types";
 import { buildingList } from "./optionLists";
 
 type CitiesAction =
@@ -83,7 +83,7 @@ export default function citiesReducer(cities:City[], action: CitiesAction): City
                 if (city.id === action.cityID) {
                     let foundBuilding = city.buildings.find(building => building.name === action.building);
                     if (foundBuilding) {
-                        let maximums: number[] = []
+                        let instructions: Instruction[] = []
                         for (let i = 1; i < foundBuilding.slots + 1; i++) {
                             //number of works
                             let tourism = 2 * i;
@@ -91,24 +91,71 @@ export default function citiesReducer(cities:City[], action: CitiesAction): City
                             for (let j = 1; j <= 3; j += 0.5) {
                                 //multiplier bonus
                                 let tourismCopy = tourism * j;
-                                maximums.push(tourismCopy);
+                                instructions.push({
+                                    tourism: tourismCopy,
+                                    greatWorks: i,
+                                    multiplier: j,
+                                    themingCondition: ThemingCondition.Unfulfilled,
+                                    aestheticsBonus: 1,
+                                    buildingID: foundBuilding.id
+                                });
 
                                 if (i === foundBuilding.slots && foundBuilding.themingBonus > 0) {
-                                    //standard theming bonus
-                                    tourismCopy += foundBuilding.themingBonus;
-                                    maximums.push(tourismCopy);
+                                    //museums can have partial theming bonuses, need to add instructions for each half before adding normal theming bonus instructions
+                                    if (foundBuilding.name === "museum") {
+                                        for (let k = ThemingCondition.FirstHalfFulfilled; k < ThemingCondition.SecondHalfFulfilled + 1; k++) {
+                                            //with theming bonus
+                                            tourismCopy += foundBuilding.themingBonus * 0.5;
+                                            instructions.push({
+                                                tourism: tourismCopy,
+                                                greatWorks: i,
+                                                multiplier: j,
+                                                themingCondition: k,
+                                                aestheticsBonus: 1,
+                                                buildingID: foundBuilding.id
+                                            });
 
-                                    //aesthetics bonus
+                                            //with aesthetics bonus
+                                            tourismCopy += foundBuilding.themingBonus * 0.5;
+                                            instructions.push({
+                                                tourism: tourismCopy,
+                                                greatWorks: i,
+                                                multiplier: j,
+                                                themingCondition: k,
+                                                aestheticsBonus: 2,
+                                                buildingID: foundBuilding.id
+                                            });
+
+                                            tourismCopy -= foundBuilding.themingBonus;
+                                        }
+                                    }
+                                    
+                                    //with theming bonus
                                     tourismCopy += foundBuilding.themingBonus;
-                                    maximums.push(tourismCopy);
+                                    instructions.push({
+                                        tourism: tourismCopy,
+                                        greatWorks: i,
+                                        multiplier: j,
+                                        themingCondition: ThemingCondition.Fulfilled,
+                                        aestheticsBonus: 1, 
+                                        buildingID: foundBuilding.id
+                                    });
+
+                                    //with aesthetics bonus
+                                    tourismCopy += foundBuilding.themingBonus;
+                                    instructions.push({
+                                        tourism: tourismCopy,
+                                        greatWorks: i,
+                                        multiplier: j,
+                                        themingCondition: ThemingCondition.Fulfilled,
+                                        aestheticsBonus: 2, 
+                                        buildingID: foundBuilding.id
+                                    });
                                 }
                             }
                         }
 
-                        maximums.sort((a, b) => b - a);
-                        let instructions = maximums.map(tourism => {
-                            return {tourism: tourism, conditions: false, buildingID: foundBuilding.id};
-                        });
+                        instructions.sort((a, b) => b.tourism - a.tourism);
 
                         return {
                             ...city,
