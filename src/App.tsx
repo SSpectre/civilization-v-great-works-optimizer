@@ -50,7 +50,7 @@ export default function App() {
             greatWorksDispatch({type: "add", workNumber: workNumber});
         }
         else {
-            alert("Cities must be added before great works.");
+            alert("At least one city is needed.");
         }
     }
 
@@ -76,7 +76,84 @@ export default function App() {
     }
 
     function optimize() {
-        console.log(cities);
+        if (cityNumber < 1) {
+            alert("At least one city, building, and great work are needed.");
+            return;
+        }
+
+        //get total slots of all buildings
+        let slots = cities.reduce(
+            (citySum, city) => {
+                return citySum + city.buildings.reduce(
+                    (buildingSum, building) => {
+                        return buildingSum + building.slots;
+                    },
+                    0
+                )
+            },
+            0
+        );
+
+        if (slots < 1) {
+            alert("At least one building with a great work slot is needed.");
+            return;
+        }
+
+        if (workNumber < 1) {
+            alert("At least one great work is needed.");
+            return;
+        }
+
+        //check if all great works have a type, civilization, and era
+        let validGreatWorks = works.reduce(
+            (valid, work) => {
+                return valid && work.type !== "" && work.civilization !== "" && work.era !== ""
+            },
+            true
+        );
+
+        if (!validGreatWorks) {
+            alert("All great works must have a type, civilization, and era.");
+        }
+
+        //add the theoretical maximum of each building together to get the overall theoretical maximum
+        //building instructions are already sorted, so first index is theoretical maximum
+        let theoreticalMax = cities.reduce(
+            (citySum, city) => {
+                return citySum + city.buildings.reduce(
+                    (buildingSum, building) => {
+                        return buildingSum + building.instructions[0].tourism
+                    },
+                    0
+                )
+            },
+            0
+        );
+
+        let currentTheoreticalMax = theoreticalMax;
+        let currentMax = 0;
+        let currentTotal = 0;
+        let i = 0;
+        let toIgnore = new Set();
+
+        let instructions: Types.Instruction[] = cities.flatMap(city => {
+            return city.buildings.flatMap(building => building.instructions);
+        })
+
+        instructions.sort((a, b) => b.tourism - a.tourism);
+
+        while (theoreticalMax > currentMax) {
+            while (toIgnore.has(i)) {
+                i++;
+            }
+
+            let theoreticalBuildingMax = instructions[i];
+            let j = i;
+            break;
+        }
+        
+
+        console.log(instructions);
     }
 
     function reset() {
