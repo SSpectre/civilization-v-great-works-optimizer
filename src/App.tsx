@@ -147,13 +147,23 @@ export default function App() {
                 i++;
             }
 
-            let theoreticalBuildingMax = instructions[i];
+            let theoreticalBuildingMax = instructions[i].tourism;
             let j = i;
-            break;
+            
+            while (true) {
+
+
+                break;
+            }
         }
-        
 
         console.log(instructions);
+    }
+
+    function isInstructionAchievable(instruction: Types.Instruction): boolean {
+        
+
+        return false;
     }
 
     function reset() {
